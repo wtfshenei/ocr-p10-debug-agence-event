@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 import Home from "./index";
 
 describe("When Form is created", () => {
@@ -24,21 +25,28 @@ describe("When Form is created", () => {
       await screen.findByText("Message envoyé !");
     });
   });
-
 });
 
-
 describe("When a page is created", () => {
+  let renderedPage;
+
+  beforeEach(() => {
+    renderedPage = render(<Home />);
+  });
+
   it("a list of events is displayed", () => {
-    // to implement
-  })
+    //
+  });
   it("a list a people is displayed", () => {
-    // to implement
-  })
+    const peopleList = renderedPage.getByText("CXO");
+    expect(peopleList).toBeInTheDocument();
+  });
   it("a footer is displayed", () => {
-    // to implement
-  })
+    const footerElement = renderedPage.getByText("Contactez-nous");
+    expect(footerElement).toBeInTheDocument();
+  });
   it("an event card, with the last event, is displayed", () => {
-    // to implement
-  })
+    const lastEventCard = renderedPage.getByText("Notre derniére prestation");
+    expect(lastEventCard).toBeInTheDocument();
+  });
 });
