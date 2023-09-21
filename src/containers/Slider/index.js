@@ -25,8 +25,8 @@ const Slider = () => {
     nextCard();
   }, [index]); // TODO : ajout de [index] pour monter/démonter le composant au changement de l'index
 
+  // TODO : création d'une fonction pour les boutons de slides
   const handlePaginationClick = (radioIdx) => {
-    // TODO : création d'une fonction pour les boutons de slides
     clearTimeout(timerId);
     setIndex(radioIdx);
   };
@@ -34,9 +34,8 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        <>
+        <div key={event.title}>
           <div
-            key={event.title}
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
@@ -63,7 +62,7 @@ const Slider = () => {
               ))}
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

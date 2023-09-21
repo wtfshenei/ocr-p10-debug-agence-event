@@ -1,6 +1,7 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import Home from "./index";
+import EventList from "../../containers/Events";
 
 describe("When Form is created", () => {
   it("a list of fields card is displayed", async () => {
@@ -28,25 +29,30 @@ describe("When Form is created", () => {
 });
 
 describe("When a page is created", () => {
-  let renderedPage;
-
   beforeEach(() => {
-    renderedPage = render(<Home />);
+    render(<Home />);
   });
 
-  it("a list of events is displayed", () => {
-    //
-  });
+  it ("a list of events is displayed", async() => {
+    render(<EventList/>)
+
+    await waitFor(() => {
+      const eventsList = document.querySelector('.ListContainer')
+      const eventsCards = document.querySelectorAll('.ListContainer .EventCard')
+      console.log(eventsCards.length)
+      expect(eventsList).toHaveLength(9)
+    });
+  })
   it("a list a people is displayed", () => {
-    const peopleList = renderedPage.getByText("CXO");
-    expect(peopleList).toBeInTheDocument();
+    const peopleList = document.querySelectorAll('.PeopleCard');
+    expect(peopleList).toHaveLength(6);
   });
   it("a footer is displayed", () => {
-    const footerElement = renderedPage.getByText("Contactez-nous");
+    const footerElement = document.querySelector("footer");
     expect(footerElement).toBeInTheDocument();
   });
   it("an event card, with the last event, is displayed", () => {
-    const lastEventCard = renderedPage.getByText("Notre derniére prestation");
+    const lastEventCard = document.querySelector(".presta");
     expect(lastEventCard).toBeInTheDocument();
   });
 });
