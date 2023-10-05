@@ -23,7 +23,7 @@ const Slider = () => {
 
   useEffect(() => {
     nextCard();
-  }, [index]); // TODO : ajout de [index] pour monter/démonter le composant au changement de l'index
+  }, []); // TODO : ajout de [] pour monter/démonter le composant au changement de l'index
 
   // TODO : création d'une fonction pour les boutons de slides
   const handlePaginationClick = (radioIdx) => {

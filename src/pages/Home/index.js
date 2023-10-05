@@ -14,9 +14,14 @@ import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
   const { data } = useData();
-  const last = data?.events.sort(
-    (evtA, evtB) => new Date(evtB.date) - new Date(evtA.date)
-  )[0]; // TODO : trie les events et ressort le plus récent
+
+  // Trie les événements par date du plus récent au plus ancien
+  const eventsSortedByDate = data && data.events.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  // Obtient la dernière prestation après le tri
+  // Si eventsSortedByDate existe (n'est pas null) et contient au moins un événement,
+  // la dernière prestation se trouve à la première position (index 0) du tableau trié.
+  const lastPrestation = eventsSortedByDate && eventsSortedByDate[0];
 
   return (
     <>
@@ -62,7 +67,7 @@ const Page = () => {
         </section>
         <section className="PeoplesContainer">
           <h2 className="Title">Notre équipe</h2>
-          <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
+          <p>Une équipe d’experts dédiés à l’organisation de vos événements</p>
           <div className="ListContainer">
             <PeopleCard
               imageSrc="/images/stephanie-liverani-Zz5LQe-VSMY-unsplash.png"
@@ -118,13 +123,15 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
+          {lastPrestation && (
           <EventCard
-            imageSrc={last?.cover || '/images/headway-F2KRf_QfCqw-unsplash.png'}
-            title={last?.title || 'Conférence #productCON'}
-            date={new Date(last?.date)}
-            small
-            label="boom"
+              imageSrc={lastPrestation?.cover}
+              title={lastPrestation?.title}
+              date={new Date(lastPrestation?.date)}
+              small
+              label="boom"
           />
+          )}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>
