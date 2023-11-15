@@ -16,14 +16,15 @@ const Slider = () => {
 
   const nextCard = () => {
     timerId = setTimeout(
-      () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), // TODO : Ajout de '- 1' dans la longueur de la condition afin d'enlever l'image blanche
+      () => setIndex(prevIndex => prevIndex < byDateDesc.length - 1 ? prevIndex + 1 : 0), // TODO : Ajout de '- 1' dans la longueur de la condition afin d'enlever l'image blanche
       5000
     );
   };
 
   useEffect(() => {
     nextCard();
-  }, []); // TODO : ajout de [] pour monter/démonter le composant au changement de l'index
+    return () => clearTimeout(timerId)
+  }, [[], index]); // TODO : ajout de [] pour monter/démonter le composant au lancement + 'index' à chaque changement de l'index
 
   // TODO : création d'une fonction pour les boutons de slides
   const handlePaginationClick = (radioIdx) => {
